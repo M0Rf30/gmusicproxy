@@ -1,4 +1,4 @@
-eyeD3==0.9
-gmusicapi==12.1.1
+eyeD3==0.9.4
+gmusicapi==13.0.0
 netifaces==0.10.9
 python-daemon==2.2.4

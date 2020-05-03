@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 VOLUME ["/root/.local/share/gmusicapi/"]
 EXPOSE 9999/tcp
-ENTRYPOINT ["GMusicProxy"]
+ENTRYPOINT ["/usr/src/app/GMusicProxy"]

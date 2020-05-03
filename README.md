@@ -71,6 +71,11 @@ and follow the instructions
     - Exit from the virtualenv using `deactivate`.
 
 ## Usage
+With the service running on a computer on the LAN, it can be used by any others of the same network.
+
+To launch the proxy you need the credentials of your Google account: *email* and *password*. If you are using the 2-factor authentication, you have to create an application-specific password to be used with this program. Another usefull information would be the device ID of an Android/iOS device registered in your account: you can discover it using the option `--list-devices` on the command-line. As default a fake-id, based on the mac address of the main network card of the server running the service, is used.
+
+You can provide such necessary information, as well as other options, on the command-line of the program or using a configuration file.
 
 ### Command-line
 Here a list of the supported options on the command-line:

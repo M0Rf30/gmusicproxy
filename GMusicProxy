@@ -79,24 +79,24 @@ class GetHandler(BaseHTTPRequestHandler):
                 self._get_song(id=params['id'][0], quality=params['quality'][0])
             else:
                 self._get_song(id=params['id'][0])
+
         elif parsedPath.path == "/get_all_stations":
             self._send_headers(
                 200,
                 "audio/mpegurl",
-                "inline; filename=playlist.%s" % "txt" if
-                ("format" in params
-                 and params["format"][0].lower().strip() == "text") else "m3u",
-            )
+                "inline; filename=playlist.%s" % "txt"
+                if ("format" in params
+                    and params["format"][0].lower().strip() == "text") else "m3u")
 
             if self._check_aa():
                 return
-            self._get_all_stations(
-                format=params["format"][0] if "format" in params else "m3u",
-                separator=params["separator"][0]
 
+            self._get_all_stations(
+                format=params["format"][0]
+                if "format" in params else "m3u",
+                separator=params["separator"][0]
                 if "separator" in params else "|",
                 onlyUrl=params["only_url"][0]
-
                 if "only_url" in params else "no",
             )
 
@@ -104,73 +104,85 @@ class GetHandler(BaseHTTPRequestHandler):
             self._send_headers(
                 200,
                 "audio/mpegurl",
-                "inline; filename=playlist.%s" % "txt" if
-                ("format" in params
-                 and params["format"][0].lower().strip() == "text") else "m3u",
-            )
-            self._get_all_playlists(
-                format=params["format"][0] if "format" in params else "m3u",
-                separator=params["separator"][0]
+                "inline; filename=playlist.%s" % "txt"
+                if ("format" in params
+                    and params["format"][0].lower().strip() == "text") else "m3u")
 
+            self._get_all_playlists(
+                format=params["format"][0]
+                if "format" in params else "m3u",
+                separator=params["separator"][0]
                 if "separator" in params else "|",
                 onlyUrl=params["only_url"][0]
-
                 if "only_url" in params else "no",
             )
 
         elif parsedPath.path == "/get_station" and "id" in params:
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
+
             self._get_station(
                 id=params["id"][0],
                 numTracks=params["num_tracks"][0]
-
                 if "num_tracks" in params else defaultNumberTracksStation,
             )
 
         elif parsedPath.path == "/get_ifl_station":
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
+
             self._get_station(
                 id="IFL",
                 numTracks=params["num_tracks"][0]
-
                 if "num_tracks" in params else defaultNumberTracksStation,
             )
 
         elif parsedPath.path == "/get_playlist" and "id" in params:
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
+
             self._get_playlist(
                 id=params["id"][0],
-                shuffle=True if ("shuffle" in params
-                                 and params["shuffle"][0] == "yes") else False,
+                shuffle=True
+                if ("shuffle" in params
+                    and params["shuffle"][0] == "yes") else False,
             )
 
         elif parsedPath.path == "/get_album" and "id" in params:
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
+
             self._get_album(id=params["id"][0])
 
         elif parsedPath.path == "/get_top_tracks_artist" and "id" in params:
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
+
             self._get_top_tracks_artist(
                 id=params["id"][0],
                 numTracks=params["num_tracks"][0]
-
                 if "num_tracks" in params else defaultNumberTopTracks,
             )
 
@@ -178,43 +190,43 @@ class GetHandler(BaseHTTPRequestHandler):
             self._send_headers(
                 200,
                 "audio/mpegurl",
-                "inline; filename=playlist.%s" % "txt" if
-                ("format" in params
-                 and params["format"][0].lower().strip() == "text") else "m3u",
-            )
+                "inline; filename=playlist.%s" % "txt"
+                if ("format" in params
+                    and params["format"][0].lower().strip() == "text") else "m3u")
 
             if self._check_aa():
                 return
+
             self._get_discography_artist(
                 id=params["id"][0],
                 format=params["format"][0] if "format" in params else "m3u",
                 separator=params["separator"][0]
-
                 if "separator" in params else "|",
                 onlyUrl=params["only_url"][0]
-
                 if "only_url" in params else "no",
             )
 
         elif parsedPath.path == "/get_collection":
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
+
             self._get_collection(
                 ratingthreshold=params["rating"][0]
-
                 if "rating" in params else 0,
-                shuffle=True if ("shuffle" in params
-                                 and params["shuffle"][0] == "yes") else False,
+                shuffle=True
+                if ("shuffle" in params
+                    and params["shuffle"][0] == "yes") else False,
             )
 
         elif parsedPath.path == "/get_listen_now":
             self._send_headers(
                 200,
                 "audio/mpegurl",
-                "inline; filename=playlist.%s" % "txt" if
-                ("format" in params
-                 and params["format"][0].lower().strip() == "text") else "m3u",
-            )
+                "inline; filename=playlist.%s" % "txt"
+                if ("format" in params
+                    and params["format"][0].lower().strip() == "text") else "m3u")
 
             if self._check_aa():
                 return
@@ -222,11 +234,9 @@ class GetHandler(BaseHTTPRequestHandler):
             self._get_listen_now(
                 format=params["format"][0] if "format" in params else "m3u",
                 type=params["type"][0] if "type" in params else "album",
-
                 separator=params["separator"][0]
                 if "separator" in params else "|",
                 onlyUrl=params["only_url"][0]
-
                 if "only_url" in params else "no",
             )
 
@@ -234,29 +244,32 @@ class GetHandler(BaseHTTPRequestHandler):
             self._send_headers(
                 200,
                 "audio/mpegurl",
-                "inline; filename=playlist.%s" % "txt" if
-                ("format" in params
-                 and params["format"][0].lower().strip() == "text") else "m3u",
+                "inline; filename=playlist.%s" % "txt"
+                if ("format" in params
+                    and params["format"][0].lower().strip() == "text") else "m3u",
             )
 
             if self._check_aa():
                 return
+
             self._get_situations(
                 format=params["format"][0] if "format" in params else "m3u",
                 separator=params["separator"][0]
-
                 if "separator" in params else "|",
                 onlyUrl=params["only_url"][0]
-
                 if "only_url" in params else "no",
             )
 
         elif parsedPath.path == "/get_promoted":
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
+
             self._get_promoted(
-                shuffle=True if ("shuffle" in params
-                                 and params["shuffle"][0] == "yes") else False,
+                shuffle=True
+                if ("shuffle" in params
+                    and params["shuffle"][0] == "yes") else False,
             )
 
         elif (parsedPath.path == "/search_id" and "type" in params
@@ -265,18 +278,15 @@ class GetHandler(BaseHTTPRequestHandler):
 
             if self._check_aa():
                 return
+
             result = self._search(
                 type=params["type"][0].lower().strip()
-
                 if "type" in params else "artist",
                 query_title=params["title"][0]
-
                 if "title" in params else "",
                 query_artist=params["artist"][0]
-
                 if "artist" in params else "",
                 exact=params["exact"][0].lower().strip()
-
                 if "exact" in params else "yes",
             )
 
@@ -289,25 +299,22 @@ class GetHandler(BaseHTTPRequestHandler):
             if self._check_aa():
                 return
 
-            if "type" in params and params["type"][0].lower().strip(
-            ) != "song":
-                self._send_headers(200, "audio/mpegurl",
-                                   "inline; filename=playlist.m3u")
+            if "type" in params and params["type"][0].lower().strip() != "song":
+                self._send_headers(
+                    200,
+                    "audio/mpegurl",
+                    "inline; filename=playlist.m3u")
+
             result = self._search(
                 type=params["type"][0].lower().strip()
-
                 if "type" in params else "artist",
                 query_title=params["title"][0]
-
                 if "title" in params else "",
                 query_artist=params["artist"][0]
-
                 if "artist" in params else "",
                 exact=params["exact"][0].lower().strip()
-
                 if "exact" in params else "no",
                 max_results=params["num_tracks"][0]
-
                 if "num_tracks" in params else None,
             )
 
@@ -316,9 +323,7 @@ class GetHandler(BaseHTTPRequestHandler):
                     self._get_top_tracks_artist(
                         result,
                         numTracks=params["num_tracks"][0]
-
-                        if "num_tracks" in params else defaultNumberTopTracks,
-                    )
+                        if "num_tracks" in params else defaultNumberTopTracks)
                 elif params["type"][0].lower().strip() == "song":
                     self._get_song(result)
                 elif params["type"][0].lower().strip() == "album":
@@ -327,14 +332,14 @@ class GetHandler(BaseHTTPRequestHandler):
                     self._get_matches(
                         result,
                         numTracks=params["num_tracks"][0]
+                        if "num_tracks" in params else defaultNumberTopTracks)
 
-                        if "num_tracks" in params else defaultNumberTopTracks,
-                    )
-
-        elif (parsedPath.path == "/get_new_station_by_id" and "id" in params
-              and "type" in params):
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+        elif (parsedPath.path == "/get_new_station_by_id"
+                and "id" in params and "type" in params):
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
@@ -343,27 +348,26 @@ class GetHandler(BaseHTTPRequestHandler):
                     and params["transient"][0].lower().strip() == "no"
                     and ("name" not in params or len(params["name"][0]) == 0)):
                 logger.warning("A new persistent station requires a name!")
-
                 return
+
             self._get_new_station(
                 id=params["id"][0],
                 type=params["type"][0].lower().strip(),
                 numTracks=params["num_tracks"][0]
-
                 if "num_tracks" in params else defaultNumberTracksStation,
                 transient=params["transient"][0].lower().strip()
-
                 if "transient" in params else "yes",
                 name=params["name"][0]
-
                 if "name" in params else transientStationName,
             )
 
         elif (parsedPath.path == "/get_new_station_by_search"
               and "type" in params
               and ("title" in params or "artist" in params)):
-            self._send_headers(200, "audio/mpegurl",
-                               "inline; filename=playlist.m3u")
+            self._send_headers(
+                200,
+                "audio/mpegurl",
+                "inline; filename=playlist.m3u")
 
             if self._check_aa():
                 return
@@ -372,20 +376,16 @@ class GetHandler(BaseHTTPRequestHandler):
                     and params["transient"][0].lower().strip() == "no"
                     and ("name" not in params or len(params["name"][0]) == 0)):
                 logger.warning("A new persistent station requires a name!")
-
                 return
+
             result = self._search(
                 type=params["type"][0].lower().strip()
-
                 if "type" in params else "artist",
                 query_title=params["title"][0]
-
                 if "title" in params else "",
                 query_artist=params["artist"][0]
-
                 if "artist" in params else "",
                 exact=params["exact"][0].lower().strip()
-
                 if "exact" in params else "no",
             )
 
@@ -394,13 +394,10 @@ class GetHandler(BaseHTTPRequestHandler):
                     id=result,
                     type=params["type"][0].lower().strip(),
                     numTracks=params["num_tracks"][0]
-
                     if "num_tracks" in params else defaultNumberTracksStation,
                     transient=params["transient"][0].lower().strip()
-
                     if "transient" in params else "yes",
                     name=params["name"][0]
-
                     if "name" in params else transientStationName,
                 )
 
@@ -417,7 +414,6 @@ class GetHandler(BaseHTTPRequestHandler):
             logger.warning(
                 "Unknown command '%s' or missing required parameter!",
                 parsedPath.path)
-
         return
 
     def do_HEAD(self):
@@ -460,6 +456,7 @@ class GetHandler(BaseHTTPRequestHandler):
 
         if icy_name:
             self.send_header("icy-name", icy_name)
+
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
 
@@ -473,17 +470,16 @@ class GetHandler(BaseHTTPRequestHandler):
     def _fetch_songs_list_cache(self):
         logger.debug("Fetching list of songs in collection")
         with self.server.lock:
-            self.server.allSongsCache = self._robust_retry(lambda: api.
-                                                           get_all_songs())
+            self.server.allSongsCache = self._robust_retry(
+                    lambda: api.get_all_songs())
 
     def _icy_name(self, album=None, artist=None, title=None):
         return ("%s /// %s /// %s" % (artist, album, title)).encode("utf-8")
 
     def _icy_metadata(self, album=None, artist=None, title=None):
-        text = "StreamTitle='%ss';" % (self._icy_name(album, artist,
-                                                      title).decode("utf-8"))
+        text = "StreamTitle='%ss';" % (
+            self._icy_name(album, artist, title).decode("utf-8"))
         metadata = (chr(len(text)) + text).ljust(len(text) * 16 + 1, chr(0))
-
         return metadata.encode("utf-8")
 
     def _get_song(self, id, only_headers=False, quality='hi'):
@@ -506,7 +502,6 @@ class GetHandler(BaseHTTPRequestHandler):
                                 or ("id" in song and song["id"] == id)):
                             info = song.copy()
                             refetchOnFailure = False
-
                             break
 
                 if info is None and refetchOnFailure:
@@ -518,8 +513,8 @@ class GetHandler(BaseHTTPRequestHandler):
                     break
         else:
             if id[0] == "T":
-                info = self._robust_retry(lambda: api.get_track_info(
-                    store_track_id=id))
+                info = self._robust_retry(
+                    lambda: api.get_track_info(store_track_id=id))
             else:
                 logger.error(
                     "Unsupported id '%s': report info to reproduce this to the author",
@@ -584,11 +579,12 @@ class GetHandler(BaseHTTPRequestHandler):
             tempFile.close()
             os.unlink(tempFile.name)
 
-        url = self._robust_retry(lambda: api.get_stream_url(song_id=id, quality=quality))
+        url = self._robust_retry(
+                lambda: api.get_stream_url(song_id=id, quality=quality))
+
         logger.debug("streaming url: %s", url)
 
-        do_shoutcast = config[
-            "shoutcast_metadata"] and "icy-metadata" in self.headers
+        do_shoutcast = config["shoutcast_metadata"] and "icy-metadata" in self.headers
 
         mp3 = opener.open(url)
         logger.debug("tag size: %s byte", tagsSize)
@@ -596,17 +592,18 @@ class GetHandler(BaseHTTPRequestHandler):
 
         if mp3.info().get("Content-Length"):
             songSize = int(mp3.info().get("Content-Length"))
+
         logger.debug("content size from HTTP headers: %s byte", songSize)
 
         self._send_headers(
             200,
             "audio/mpeg",
             "inline; filename=%s.mp3" % id.strip(),
-            ((tagsSize if not do_shoutcast else 0) + songSize) if
-            (songSize > 0) else None,
-            downloadBlockSize if do_shoutcast else None,
+            ((tagsSize if not do_shoutcast else 0) + songSize)
+            if (songSize > 0) else None,
+            downloadBlockSize
+            if do_shoutcast else None,
             self._icy_name(tags.album, tags.artist, tags.title)
-
             if config["shoutcast_metadata"] else None,
         )
 
@@ -624,13 +621,14 @@ class GetHandler(BaseHTTPRequestHandler):
 
                 if do_shoutcast:
                     self.wfile.write(
-                        self._icy_metadata(tags.album, tags.artist,
-                                           tags.title))
+                        self._icy_metadata(
+                            tags.album,
+                            tags.artist,
+                            tags.title))
                 block = mp3.read(downloadBlockSize)
 
                 if (songSize > 0 and writtenBytes > cachePrefillSize
                         and songSize - writtenBytes < maxCacheSize):
-
                     break
 
             if not config["disable_playcount_increment"]:
@@ -664,30 +662,36 @@ class GetHandler(BaseHTTPRequestHandler):
                                            tags.title))
 
     def _get_all_stations(self, format, separator, onlyUrl):
-        logger.info("Getting all stations as plain-text list..." if format ==
-                    "text" else "Getting all stations as M3U list...")
-        stations = self._robust_retry(lambda: api.get_all_stations())
+        logger.info(
+            "Getting all stations as plain-text list..."
+            if format == "text" else "Getting all stations as M3U list...")
+        stations = self._robust_retry(
+            lambda: api.get_all_stations())
         logger.debug(pprint.pformat(stations))
 
         if format.lower().strip() != "text":
             self.wfile.write("#EXTM3U\n".encode("utf-8"))
-        logger.debug("generated playlist:" if format.lower().strip() ==
-                     "text" else "generated playlist:\n#EXTM3U")
+
+        logger.debug(
+            "generated playlist:"
+            if format.lower().strip() == "text"
+            else "generated playlist:\n#EXTM3U")
 
         for station in stations:
             if "id" in station:
                 if format.lower().strip() == "text":
                     line = "%shttp://%s:%s/get_station?id=%s" % (
-                        "%s%s" % (station["name"], separator) if
-                        ("name" in station
-                         and onlyUrl.lower().strip() != "yes") else "",
+                        "%s%s" % (station["name"], separator)
+                        if ("name" in station
+                            and onlyUrl.lower().strip() != "yes") else "",
                         config["host"],
                         config["port"],
                         station["id"],
                     )
                 else:
                     line = "#EXTINF:-1,%s\nhttp://%s:%s/get_station?id=%s" % (
-                        station["name"] if "name" in station else "",
+                        station["name"]
+                        if "name" in station else "",
                         config["host"],
                         config["port"],
                         station["id"],
@@ -696,54 +700,65 @@ class GetHandler(BaseHTTPRequestHandler):
                 logger.debug(line)
 
     def _get_situations(self, format, separator, onlyUrl):
-        logger.info("Getting Listen Now situations as plain-text list..." if format ==
-                    "text" else "Getting Listen Now situations as M3U list...")
-        situations = self._robust_retry(lambda: api.get_listen_now_situations())
+        logger.info(
+            "Getting Listen Now situations as plain-text list..."
+            if format == "text"
+            else "Getting Listen Now situations as M3U list...")
+        situations = self._robust_retry(
+            lambda: api.get_listen_now_situations())
         logger.debug(pprint.pformat(situations))
 
         if format.lower().strip() != "text":
             self.wfile.write("#EXTM3U\n".encode("utf-8"))
-        logger.debug("generated playlist:" if format.lower().strip() ==
-                     "text" else "generated playlist:\n#EXTM3U")
+
+        logger.debug(
+            "generated playlist:"
+            if format.lower().strip() == "text"
+            else "generated playlist:\n#EXTM3U")
 
         for situation in situations:
             if "id" in situation:
                 name = situation["title"]
                 curatedId = situation["stations"][0]["seed"]["curatedStationId"]
-                stationId = api.create_station(
-                    name=name,
-                    curated_station_id=curatedId,
-                )
+                idtype = "situation"
                 if format.lower().strip() == "text":
-                    line = "%shttp://%s:%s/get_station?id=%s" % (
-                        "Listen Now - %s%s" % (name, separator) if
-                        ("title" in situation
-                         and onlyUrl.lower().strip() != "yes") else "Listen Now",
+                    line = "%shttp://%s:%s/get_new_station_by_id?id=%s&type=%s" % (
+                        "Listen Now - %s%s" % (name, separator)
+                        if ("title" in situation
+                            and onlyUrl.lower().strip() != "yes")
+                        else "Listen Now",
                         config["host"],
                         config["port"],
-                        stationId,
+                        curatedId,
+                        idtype,
                     )
                 else:
-                    line = "#EXTINF:-1,%s\nhttp://%s:%s/get_station?id=%s" % (
+                    line = "#EXTINF:-1,%s\nhttp://%s:%s/get_new_station_by_id?id=%s&type=%s" % (
                         "Listen Now - %s" % name,
                         config["host"],
                         config["port"],
-                        stationId,
+                        curatedId,
+                        idtype,
                     )
                 self.wfile.write(("%s\n" % line).encode("utf-8"))
                 logger.debug(line)
-            self._robust_retry(lambda: api.delete_stations(stationId))
 
     def _get_listen_now(self, format, type, separator, onlyUrl):
-        logger.info("Getting Listen Now artists or albums as plain-text list..." if format ==
-                    "text" else "Getting Listen Now artists or albums as M3U list...")
-        items = self._robust_retry(lambda: api.get_listen_now_items())
+        logger.info(
+            "Getting Listen Now artists or albums as plain-text list..."
+            if format == "text"
+            else "Getting Listen Now artists or albums as M3U list...")
+        items = self._robust_retry(
+            lambda: api.get_listen_now_items())
         logger.debug(pprint.pformat(items))
 
         if format.lower().strip() != "text":
             self.wfile.write("#EXTM3U\n".encode("utf-8"))
-        logger.debug("generated playlist:" if format.lower().strip() ==
-                     "text" else "generated playlist:\n#EXTM3U")
+
+        logger.debug(
+            "generated playlist:"
+            if format.lower().strip() == "text"
+            else "generated playlist:\n#EXTM3U")
 
         for item in items:
             if type == "artist":
@@ -798,15 +813,20 @@ class GetHandler(BaseHTTPRequestHandler):
 
     def _get_all_playlists(self, format, separator, onlyUrl):
         logger.info(
-            "Getting all playlists as plain-text list..." if format.lower(
-            ).strip() == "text" else "Getting all playlists as M3U list...")
-        playlists = self._robust_retry(lambda: api.get_all_playlists())
+            "Getting all playlists as plain-text list..."
+            if format.lower().strip() == "text"
+            else "Getting all playlists as M3U list...")
+        playlists = self._robust_retry(
+            lambda: api.get_all_playlists())
         logger.debug(pprint.pformat(playlists))
 
         if format.lower().strip() != "text":
             self.wfile.write("#EXTM3U\n")
-        logger.debug("generated playlist:" if format.lower().strip() ==
-                     "text" else "generated playlist:\n#EXTM3U")
+
+        logger.debug(
+            "generated playlist:"
+            if format.lower().strip() == "text"
+            else "generated playlist:\n#EXTM3U")
 
         for playlist in playlists:
             if "id" in playlist:
@@ -823,7 +843,6 @@ class GetHandler(BaseHTTPRequestHandler):
                         config["host"],
                         config["port"],
                         playlist["id"]
-
                         if not useToken else playlist["shareToken"],
                     )
                 else:
@@ -832,17 +851,22 @@ class GetHandler(BaseHTTPRequestHandler):
                         config["host"],
                         config["port"],
                         playlist["id"]
-
                         if not useToken else playlist["shareToken"],
                     )
                 self.wfile.write(("%s\n" % line).encode("utf-8"))
                 logger.debug(line)
 
     def _get_station(self, id, numTracks):
-        station = self._robust_retry(lambda: api.get_station_tracks(
-            station_id=id, num_tracks=numTracks))
-        logger.info("Getting %s tracks from station with id '%s'", numTracks,
-                    id)
+        station = self._robust_retry(
+            lambda: api.get_station_tracks(
+                station_id=id,
+                num_tracks=numTracks)
+        )
+
+        logger.info(
+            "Getting %s tracks from station with id '%s'",
+            numTracks,
+            id)
         logger.debug(pprint.pformat(station))
         self.wfile.write(b"#EXTM3U\n")
         logger.debug("generated playlist:\n#EXTM3U")
@@ -851,12 +875,10 @@ class GetHandler(BaseHTTPRequestHandler):
             if "nid" in track:
                 line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                     str(int(int(track["durationMillis"]) / 1000))
-
                     if "durationMillis" in track else -1,
                     "%s - " % track["artist"] if "artist" in track else "",
                     track["title"] if "title" in track else "",
                     " - %s" % track["album"]
-
                     if config["extended_m3u"] and "album" in track else "",
                     config["host"],
                     config["port"],
@@ -871,20 +893,28 @@ class GetHandler(BaseHTTPRequestHandler):
             track_id=id if type == "song" else None,
             artist_id=id if type == "artist" else None,
             album_id=id if type == "album" else None,
+            curated_station_id=id if type == "situation" else None,
         )  # by genre: TO DO
 
         if transient != "no":
             transientStationIds.append(stationId)
-        station = self._robust_retry(lambda: api.get_station_tracks(
-            station_id=stationId, num_tracks=numTracks))
+
+        station = self._robust_retry(
+            lambda: api.get_station_tracks(
+                station_id=stationId, num_tracks=numTracks))
 
         if transient != "no":
-            self._robust_retry(lambda: api.delete_stations(stationId))
+            self._robust_retry(
+                lambda: api.delete_stations(stationId))
             transientStationIds.remove(stationId)
+
         logger.info(
-            "Getting %s tracks from a new %s station based on %s id '%s'" %
-            (numTracks, "transient" if transient != "no" else "persistent",
-             type, id))
+            "Getting %s tracks from a new %s station based on %s id '%s'" % (
+                numTracks,
+                "transient"
+                if transient != "no" else "persistent",
+                type,
+                id))
         logger.debug(pprint.pformat(station))
         self.wfile.write(b"#EXTM3U\n")
         logger.debug("generated playlist:\n#EXTM3U")
@@ -893,12 +923,10 @@ class GetHandler(BaseHTTPRequestHandler):
             if "nid" in track:
                 line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                     str(int(int(track["durationMillis"]) / 1000))
-
                     if "durationMillis" in track else -1,
                     "%s - " % track["artist"] if "artist" in track else "",
                     track["title"] if "title" in track else "",
                     " - %s" % track["album"]
-
                     if config["extended_m3u"] and "album" in track else "",
                     config["host"],
                     config["port"],
@@ -947,22 +975,17 @@ class GetHandler(BaseHTTPRequestHandler):
                         for song in wholeCollection:
                             if song["id"] == track["trackId"]:
                                 foundTrack = song
-
                                 break
 
                     if foundTrack:
                         line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                             str(int(int(foundTrack["durationMillis"]) / 1000))
-
                             if "durationMillis" in foundTrack else -1,
                             "%s - " % foundTrack["artist"]
-
                             if "artist" in foundTrack else "",
                             foundTrack["title"]
-
                             if "title" in foundTrack else "",
                             " - %s" % foundTrack["album"]
-
                             if config["extended_m3u"] and "album" in foundTrack
                             else "",
                             config["host"],
@@ -980,8 +1003,11 @@ class GetHandler(BaseHTTPRequestHandler):
             logger.warning("Playlist not found!")
 
     def _get_album(self, id):
-        album = self._robust_retry(lambda: api.get_album_info(
-            album_id=id, include_tracks=True))
+        album = self._robust_retry(
+            lambda: api.get_album_info(
+                album_id=id,
+                include_tracks=True)
+        )
         logger.info(
             "Getting the tracks of the album with id '%s': %s - %s",
             id,
@@ -997,12 +1023,10 @@ class GetHandler(BaseHTTPRequestHandler):
                 if "nid" in track:
                     line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                         str(int(int(track["durationMillis"]) / 1000))
-
                         if "durationMillis" in track else -1,
                         "%s - " % track["artist"] if "artist" in track else "",
                         track["title"] if "title" in track else "",
                         " - %s" % track["album"]
-
                         if config["extended_m3u"] and "album" in track else "",
                         config["host"],
                         config["port"],
@@ -1012,12 +1036,13 @@ class GetHandler(BaseHTTPRequestHandler):
                     logger.debug(line)
 
     def _get_top_tracks_artist(self, id, numTracks):
-        artist = self._robust_retry(lambda: api.get_artist_info(
-            artist_id=id,
-            include_albums=False,
-            max_top_tracks=numTracks,
-            max_rel_artist=0,
-        ))
+        artist = self._robust_retry(
+            lambda: api.get_artist_info(
+                artist_id=id,
+                include_albums=False,
+                max_top_tracks=numTracks,
+                max_rel_artist=0)
+        )
         logger.info(
             "Getting %s top tracks of the artist with id '%s': %s",
             numTracks,
@@ -1033,12 +1058,10 @@ class GetHandler(BaseHTTPRequestHandler):
                 if "nid" in track:
                     line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                         str(int(int(track["durationMillis"]) / 1000))
-
                         if "durationMillis" in track else -1,
                         "%s - " % track["artist"] if "artist" in track else "",
                         track["title"] if "title" in track else "",
                         " - %s" % track["album"]
-
                         if config["extended_m3u"] and "album" in track else "",
                         config["host"],
                         config["port"],
@@ -1048,11 +1071,13 @@ class GetHandler(BaseHTTPRequestHandler):
                     logger.debug(line)
 
     def _get_discography_artist(self, id, format, separator, onlyUrl):
-        artist = self._robust_retry(lambda: api.get_artist_info(
-            artist_id=id,
-            include_albums=True,
-            max_top_tracks=0,
-            max_rel_artist=0))
+        artist = self._robust_retry(
+            lambda: api.get_artist_info(
+                artist_id=id,
+                include_albums=True,
+                max_top_tracks=0,
+                max_rel_artist=0)
+        )
         logger.info(
             "Getting all albums of the artist with id '%s' (%s) as a %s list...",
             id,
@@ -1063,26 +1088,35 @@ class GetHandler(BaseHTTPRequestHandler):
 
         if format.lower().strip() != "text":
             self.wfile.write(b"#EXTM3U\n")
-        logger.debug("generated list:" if format.lower().strip() ==
-                     "text" else "generated list:\n#EXTM3U")
+
+        logger.debug(
+            "generated list:"
+            if format.lower().strip() == "text"
+            else "generated list:\n#EXTM3U")
 
         if "albums" in artist:
             for album in artist["albums"]:
                 if "albumId" in album:
                     if format.lower().strip() == "text":
                         line = "%shttp://%s:%s/get_album?id=%s" % (
-                            "%s%s%s%s" % (album["name"], separator,
-                                          album["year"], separator) if
-                            ("name" in album and "year" in album
-                             and onlyUrl.lower().strip() != "yes") else "",
+                            "%s%s%s%s" % (
+                                album["name"],
+                                separator,
+                                album["year"],
+                                separator)
+                            if ("name" in album
+                                and "year" in album
+                                and onlyUrl.lower().strip() != "yes") else "",
                             config["host"],
                             config["port"],
                             album["albumId"],
                         )
                     else:
                         line = "#EXTINF:-1,%s [%s]\nhttp://%s:%s/get_album?id=%s" % (
-                            album["name"] if "name" in album else "",
-                            album["year"] if "year" in album else "",
+                            album["name"]
+                            if "name" in album else "",
+                            album["year"]
+                            if "year" in album else "",
                             config["host"],
                             config["port"],
                             album["albumId"],
@@ -1100,12 +1134,10 @@ class GetHandler(BaseHTTPRequestHandler):
             if "storeId" in track:
                 line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                     str(int(int(track["durationMillis"]) / 1000))
-
                     if "durationMillis" in track else -1,
                     "%s - " % track["artist"] if "artist" in track else "",
                     track["title"] if "title" in track else "",
                     " - %s" % track["album"]
-
                     if config["extended_m3u"] and "album" in track else "",
                     config["host"],
                     config["port"],
@@ -1119,12 +1151,12 @@ class GetHandler(BaseHTTPRequestHandler):
 
         if len(songs) == 0:
             logger.warning("No songs in your collection!?!")
-
             return
 
         if int(ratingthreshold) > 0:
-            logger.info("Filtering out songs with rating lower than %s",
-                        ratingthreshold)
+            logger.info(
+                "Filtering out songs with rating lower than %s",
+                ratingthreshold)
 
             for song in songs:
                 songrating = song.get("rating")
@@ -1146,26 +1178,26 @@ class GetHandler(BaseHTTPRequestHandler):
             if "id" in track or "nid" in track:
                 line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                     str(int(int(track["durationMillis"]) / 1000))
-
                     if "durationMillis" in track else -1,
-                    "%s - " % track["artist"] if "artist" in track else "",
-                    track["title"] if "title" in track else "",
+                    "%s - " % track["artist"]
+                    if "artist" in track else "",
+                    track["title"]
+                    if "title" in track else "",
                     " - %s" % track["album"]
-
                     if config["extended_m3u"] and "album" in track else "",
                     config["host"],
                     config["port"],
-                    track["id"] if "id" in track else track["nid"],
+                    track["id"]
+                    if "id" in track else track["nid"],
                 )
                 self.wfile.write(("%s\n" % line).encode("utf-8"))
                 logger.debug(line)
 
     def _get_promoted(self, shuffle=False):
-        songs = self._robust_retry(lambda: api.get_promoted_songs())
+        songs = self._robust_retry(lambda: api.get_top_songs())
 
         if len(songs) == 0:
             logger.warning("No promoted tracks!?!")
-
             return
 
         if shuffle:
@@ -1181,12 +1213,10 @@ class GetHandler(BaseHTTPRequestHandler):
             if "storeId" in track:
                 line = "#EXTINF:%s,%s%s%s\nhttp://%s:%s/get_song?id=%s" % (
                     str(int(int(track["durationMillis"]) / 1000))
-
                     if "durationMillis" in track else -1,
                     "%s - " % track["artist"] if "artist" in track else "",
                     track["title"] if "title" in track else "",
                     " - %s" % track["album"]
-
                     if config["extended_m3u"] and "album" in track else "",
                     config["host"],
                     config["port"],
@@ -1200,12 +1230,14 @@ class GetHandler(BaseHTTPRequestHandler):
 
         if type is None or type not in ["artist", "song", "album", "matches"]:
             logger.warning(
-                "The type of search has to be specified: artist, song, album or matches!"
-            )
-
+                "The type of search has to be specified: artist, song, album or matches!")
             return
-        logger.info("Searching for %s with query: %s %s", type, query_artist,
-                    query_title)
+
+        logger.info(
+                "Searching for %s with query: %s %s",
+                type,
+                query_artist,
+                query_title)
         match = None
 
         if type == "artist":
@@ -1220,13 +1252,11 @@ class GetHandler(BaseHTTPRequestHandler):
             else:
                 if "artist_hits" in results:
                     for artist in results["artist_hits"]:
-                        if ("name" in artist["artist"]
-                                and artist["artist"]["name"].lower().strip() ==
-                                query_artist.lower().strip()):
+                        if ("name" in artist["artist"] and
+                                artist["artist"]["name"].lower().strip() == query_artist.lower().strip()):
                             logger.debug(
                                 "Found exact matching artist in list!")
                             match = artist
-
                             break
 
             if match and "artist" in match and "artistId" in match["artist"]:
@@ -1236,13 +1266,16 @@ class GetHandler(BaseHTTPRequestHandler):
                     match["artist"]["artistId"],
                 )
                 logger.debug(pprint.pformat(match))
-
                 return match["artist"]["artistId"]
             else:
                 logger.warning("No matching found.")
+
         elif type == "song":
-            results = self._robust_retry(lambda: api.search("%s %s" % (
-                query_artist, query_title)))
+            results = self._robust_retry(
+                lambda: api.search("%s %s" % (
+                    query_artist,
+                    query_title))
+            )
             logger.debug(pprint.pformat(results))
 
             if (exact != "yes" and "song_hits" in results
@@ -1253,14 +1286,11 @@ class GetHandler(BaseHTTPRequestHandler):
                 if "song_hits" in results:
                     for song in results["song_hits"]:
                         if ("title" in song["track"]
-                                and song["track"]["title"].lower().strip() ==
-                                query_title.lower().strip()
-                                and "artist" in song["track"]
-                                and song["track"]["artist"].lower().strip() ==
-                                query_artist.lower().strip()):
+                            and song["track"]["title"].lower().strip() == query_title.lower().strip()
+                            and "artist" in song["track"]
+                            and song["track"]["artist"].lower().strip() == query_artist.lower().strip()):
                             logger.debug("Found exact matching song!")
                             match = song
-
                             break
 
             if match and "track" in match and "storeId" in match["track"]:
@@ -1271,10 +1301,11 @@ class GetHandler(BaseHTTPRequestHandler):
                     match["track"]["storeId"],
                 )
                 logger.debug(pprint.pformat(match))
-
                 return match["track"]["storeId"]
+
             else:
                 logger.warning("No matching found.")
+
         elif type == "matches":
             results = self._robust_retry(lambda: api.search(
                 "%s %s" % (query_artist, query_title), max_results))
@@ -1285,6 +1316,7 @@ class GetHandler(BaseHTTPRequestHandler):
                 return match
             else:
                 logger.warning("No matching found.")
+
         elif type == "album":
             results = self._robust_retry(lambda: api.search("%s %s" % (
                 query_artist, query_title)))
@@ -1299,14 +1331,13 @@ class GetHandler(BaseHTTPRequestHandler):
                 if "album_hits" in results:
                     for album in results["album_hits"]:
                         if ("name" in album["album"]
-                                and album["album"]["name"].lower().strip() ==
-                                query_title.lower().strip()
-                                and "artist" in album["album"]
-                                and album["album"]["artist"].lower().strip() ==
-                                query_artist.lower().strip()):
+                            and album["album"]["name"].lower().strip() ==
+                            query_title.lower().strip()
+                            and "artist" in album["album"]
+                            and album["album"]["artist"].lower().strip() ==
+                            query_artist.lower().strip()):
                             logger.debug("Found exact matching album in list!")
                             match = album
-
                             break
 
             if match and "album" in match and "albumId" in match["album"]:
@@ -1317,7 +1348,6 @@ class GetHandler(BaseHTTPRequestHandler):
                     match["album"]["albumId"],
                 )
                 logger.debug(pprint.pformat(match))
-
                 return match["album"]["albumId"]
             else:
                 logger.warning("No matching found.")
@@ -1338,8 +1368,8 @@ class GetHandler(BaseHTTPRequestHandler):
             allSongs = None
         else:
             if id[0] == "T":
-                info = self._robust_retry(lambda: api.get_track_info(
-                    store_track_id=id))
+                info = self._robust_retry(
+                    lambda: api.get_track_info(store_track_id=id))
             else:
                 logger.error(
                     "Unsupported id '%s': report info to reproduce this to the author",
@@ -1380,8 +1410,7 @@ class GetHandler(BaseHTTPRequestHandler):
                     self.handle_one_request()
                 else:
                     logger.error(
-                        "Sorry, could not reconnect, those credentials weren't accepted."
-                    )
+                        "Sorry, could not reconnect, those credentials weren't accepted.")
                     sys.exit(1)
             else:
                 raise
@@ -1392,8 +1421,7 @@ class GetHandler(BaseHTTPRequestHandler):
                 logger.warning("Detected remote peer disconnected.")
             elif e == 10053:
                 logger.warning(
-                    "An established connection was aborted by the software in your host machine."
-                )
+                    "An established connection was aborted by the software in your host machine.")
             else:
                 raise
 
@@ -1435,8 +1463,7 @@ def getOptions():
     parser.add_argument(
         "-H",
         "--host",
-        help="host in the generated URLs [default: autodetected local ip address]",
-    )
+        help="host in the generated URLs [default: autodetected local ip address]")
     parser.add_argument(
         "-b",
         "--bind-address",
@@ -1451,44 +1478,38 @@ def getOptions():
         "--disable-all-access",
         default=False,
         action="store_true",
-        help="disable All Access functionalities",
-    )
+        help="disable All Access functionalities")
     parser.add_argument(
         "-D",
         "--debug",
         default=False,
         action="store_true",
-        help="enable debug messages",
-    )
+        help="enable debug messages")
     parser.add_argument("-l", "--log", help="log file")
     parser.add_argument(
         "-f",
         "--daemon",
         default=False,
         action="store_true",
-        help="daemonize the program",
-    )
+        help="daemonize the program")
     parser.add_argument(
         "-x",
         "--extended-m3u",
         default=False,
         action="store_true",
-        help="enable non-standard extended m3u headers",
-    )
+        help="enable non-standard extended m3u headers")
     parser.add_argument(
         "-s",
         "--shoutcast-metadata",
         default=False,
         action="store_true",
-        help="enable Shoutcast metadata protocol support (disabling IDv3 tags)",
-    )
+        help="enable Shoutcast metadata protocol support (disabling IDv3 tags)")
     parser.add_argument(
         "-C",
         "--disable-playcount-increment",
         default=False,
         action="store_true",
-        help="disable the automatic increment of playcounts upon song fetch",
-    )
+        help="disable the automatic increment of playcounts upon song fetch")
 
     config = ConfigParser()
     args = parser.parse_args()
@@ -1560,7 +1581,7 @@ if __name__ == "__main__":
     programDescription = "Google Play Music Proxy"
     programName = "gmusicproxy"
     programMainAuthor = "Mario Di Raimondo"
-    programVersion = "1.0.11"
+    programVersion = "1.0.12"
     transientStationName = "%s station " % programDescription
     transientStationIds = []
     config = dict()
@@ -1610,6 +1631,7 @@ if __name__ == "__main__":
         if "daemon" not in globals():
             logger.error("Python 'daemon' module is not installed!")
             sys.exit(1)
+
         contextDaemon = daemon.DaemonContext(files_preserve=[])
         # python-daemon>=2.1 has initgroups=True by default but it requires
         # root privileges. older versions don't support initgroups as
